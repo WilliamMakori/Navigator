@@ -20,4 +20,7 @@ struct Location:Identifiable {
     var coordinates: CLLocationCoordinate2D!
     
 }
+// Write code to get data here for different addresses from an API.
+
+
 

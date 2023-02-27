@@ -63,6 +63,7 @@ final class MapViewModel: NSObject,ObservableObject, CLLocationManagerDelegate{
     }
     // Random addresses. 
     private (set) var data:[Location] = [
+        // Is there a way to use a network call to get this data instead of typing it out here this way?
         
         Location(house_number: 25, street_name: "Howard", city_name: "Burnaby", province: "BC", postalCode: "V5B3Y1", country: "Canada", coordinates: .init(latitude: 77, longitude: 35)),
         Location(house_number: 647, street_name: "Homer", city_name: "Vancouver", province: "BC", postalCode: "V5A54T", country: "Canada", coordinates: .init(latitude: 76, longitude: 88)),

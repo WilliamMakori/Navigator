@@ -14,7 +14,7 @@ struct NavigatorApp: App {
         
         WindowGroup {
             
-            Map_Viewer()
+            Home()
             
         }
         

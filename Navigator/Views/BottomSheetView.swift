@@ -6,57 +6,146 @@
 //
 
 import SwiftUI
+import MapKit
 
-struct BottomSheetView: View {
-    // State variables also create a binding and they also store the value. 
-//    @Binding var query:String // two way connection, the UI can change this and vice versa.
-//    var locations:[Address] = [Address(nameOfLocation: "Makori's House", street_Number: 21, street_Name: "Fell Avenue", cityName: "Burnaby", postalCode: "V5B 3Y1", province: "BC"),
-//                               Address(nameOfLocation: "PiDGiN Restaurant", street_Number: 350, street_Name: "Carrall", cityName: "Vancouver", postalCode: "V6B 2J3", province: "BC"),
-//                               Address(nameOfLocation: "Bula Hookah Lounge", street_Number: 4027, street_Name: "Hastings", cityName: "Burnaby", postalCode: "V5C 2J1", province: "BC")
-//    ]
+struct Home:View{
+    
+    
+    @State var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 13.086, longitude: 80.27), latitudinalMeters: 10000, longitudinalMeters: 10000)
+    @State var offset: CGFloat = 0
     
     var body: some View {
-       // Write code for the entire bottom sheet and include the other four views above it in it's window
-        HStack{
-            Image(systemName: "magnifyingglass")
-                .foregroundColor(.gray)
-//            TextField("Search Navigator", text: $query)
-//                .background(BlurView(style: .light)) // Add a blurView as the background of the search bar.
-//                .frame(width: UIScreen.main.bounds.width*0.8, height: 8, alignment: .center)
+        
+        ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
+            Map(coordinateRegion: $region)
+                .ignoresSafeArea(.all,edges: .all)
+            GeometryReader { reader in
+                VStack{
+                    BottomSheet(offset: $offset, value: (-reader.frame(in: .global).height + 150 ))
+                        .offset(y: reader.frame(in: .global).height - 150)
+                    // adding gesture....
+                        .offset(y: offset)
+                        .gesture(
+                            
+                            DragGesture().onChanged({ (value) in
+                            withAnimation{
+                                // Checking the direction of the scroll
+                                // scrolling upwards....
+                                // using startLocation bcz translation will change when we drag up and down....
+                                // Something i missed up here
+                                if value.startLocation.y > reader.frame(in: .global).minX{
+                                    if value.translation.height < 0 && offset > (-reader.frame(in: .global).height + 150){
+                                        offset = value.translation.height
+                                    }
+                                    
+                                    
+                                }
+                                // Read up on gestures again
+                                if value.startLocation.y > reader.frame(in: .global).minX{
+                                    
+                                    if value.translation.height > 0 && offset < 0{
+                                        offset = (-reader.frame(in: .global).height +  150) + value.translation.height
+                                        
+                                    }
+                                    
+                                }
+                            }
+                            
+                        }).onEnded({ (value) in
+                            // Keyboard has to disappear after clicking out.
+                            
+                            withAnimation {
+                                // Checking and pulling the screen ...
+                                if value.startLocation.y > reader.frame(in: .global).midX{
+                                    if -value.translation.height > reader.frame(in: .global).midX{
+                                        
+                                        offset = (-reader.frame(in: .global).height + 150)
+                                        
+                                        return // Why did he use this ?
+                                        
+                                    }
+                                    offset = 0
+                                }
+                                if value.startLocation.y < reader.frame(in: .global).midX{
+                                    
+                                    if value.translation.height < reader.frame(in: .global).midX{
+                                        
+                                        offset = (-reader.frame(in: .global).height + 150)
+                                        
+                                        return // Why did he use this ?
+                                        
+                                    }
+                                    offset = 0
+                                }
+                                
+                            }
+                        })
+                        )
+                    
+                }
+                
+            }
+            .ignoresSafeArea(.all, edges: .bottom)
+            
+        })
+        
+        
+    }
+    
+    struct BottomSheet: View {
+       
+        @Binding var offset: CGFloat
+        @State var query: String = ""
+        var value : CGFloat
+        var body : some View{
+            NavigationView{
+                VStack {
+                    HStack{
+                        // add the button that represents the users profile
+                    }
+                    
+                    ScrollView(.vertical, showsIndicators: false){
+                        LazyVStack(alignment: .leading, spacing: 15, content: {
+                         // Favourites
+                         // Recents
+                            // My Guides
+                            //Three buttons at the bottom that create different pop up views.
+                            // Four buttons
+                            //Share My Location - impements search feature
+                            // Mark my location
+                            // Report an issue
+                            // Terms and conditions
+                            
+                        })
+                        .padding()
+                        .padding(.top)
+                    }
+                    
+                }
+            }
+            .searchable(text: $query){
+                // We can use a preview
+            }
+            
+//            .background(BlurView(style: .systemMaterial))
+//            .cornerRadius(15)
+            .onChange(of: query) { newValue in
+                // observeablObject.searchResults = observeableObject.searchResults.filter ({ location in
+                // if location.house_number.contains(query)
+                // This will be shown to 
+//            })
+                
+                
+            }
         }
     }
-}
-struct Address: Identifiable{
-    let id:String = UUID().uuidString
-    let nameOfLocation:String?// This should be an optional as not all places have names. eg: Bula Hookah Lounge.
-    let street_Number: Int
-    let street_Name: String
-    let cityName: String
-    let postalCode: String
-    let province: String
     
-}
-struct BlurView:UIViewRepresentable{
     
-    var style : UIBlurEffect.Style // This gives different alternative
     
-    // This function is necessary to conform to UIViewRepresentable.
-    func makeUIView(context: Context) -> UIVisualEffectView {
-        
-        let view = UIVisualEffectView(effect: UIBlurEffect(style: style))
-        
-        return view
-        
-    }// This function is necessary to conform to UIViewRepresentable.
-    
-    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
-        
-         // Just had to edit the placeholder, nothing gets returned here so there's no need for a return statement.
-        
-    }
-}
-struct BottomSheetView_Previews: PreviewProvider {
-    static var previews: some View {
-        BottomSheetView()
+
+    struct BottomSheetView_Previews: PreviewProvider {
+        static var previews: some View {
+            Home()
+        }
     }
 }

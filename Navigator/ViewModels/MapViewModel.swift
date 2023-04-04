@@ -62,17 +62,8 @@ final class MapViewModel: NSObject,ObservableObject, CLLocationManagerDelegate{
         checkLocationAuthorization()
     }
     // Random addresses. 
-    private (set) var data:[Location] = [
-        // Is there a way to use a network call to get this data instead of typing it out here this way?
-        
-        Location(house_number: 25, street_name: "Howard", city_name: "Burnaby", province: "BC", postalCode: "V5B3Y1", country: "Canada", coordinates: .init(latitude: 77, longitude: 35)),
-        Location(house_number: 647, street_name: "Homer", city_name: "Vancouver", province: "BC", postalCode: "V5A54T", country: "Canada", coordinates: .init(latitude: 76, longitude: 88)),
-        Location(house_number: 4677, street_name: "Fell", city_name: "Coquitlam", province: "BC", postalCode: "V3C777", country: "Canada", coordinates: .init(latitude: 43, longitude: 56)),
-        Location(house_number: 656, street_name: "Lowe", city_name: "North Vancouver", province: "BC", postalCode: "V56782", country: "Canada", coordinates: .init(latitude: 97, longitude: 122)),
-        Location(house_number: 663, street_name: "Joyner", city_name: "Jersey", province: "BC", postalCode: "V65HH4", country: "Canada", coordinates: .init(latitude: 34, longitude: 55)),
-        Location(house_number: 799, street_name: "Hamilton", city_name: "Ohio", province: "OH", postalCode: "V65H7Y", country: "USA", coordinates: .init(latitude: 45, longitude: 36))
-        
-    ]
+    private (set) var data:[Location] = [] // Use the MOCK json data here.
+    
     
     // We could have a property called address that is a string containing the entire
     

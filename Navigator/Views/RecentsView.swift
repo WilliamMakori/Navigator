@@ -8,8 +8,77 @@
 import SwiftUI
 
 struct RecentsView: View {
+   
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        List{
+            Button {
+                // Navigates to a location, direct this to another view.
+            } label: {
+                HStack{
+                    Circle()
+                        .foregroundColor(.red)
+                        .frame(width:30, height:30)
+                        .overlay{
+                            Image(systemName: "mappin")
+                                .foregroundColor(.white)
+                                //.font(.footnote)
+                        }
+                    VStack{
+                        Text("Dropped pin")
+                        
+                            .foregroundColor(.black)
+                        // Print the address associated with where the pin is below it, font - footnote, color is gray
+                        Text("Address info")
+                            .foregroundColor(.gray)
+                            .font(.footnote)
+                    }
+                    
+                }
+            }
+
+            Button{
+                
+            }label:{
+                HStack{
+                    Circle()
+                        .foregroundColor(.red)
+                        .frame(width:30, height:30)
+                        .overlay{
+                            Image(systemName: "mappin")
+                                .foregroundColor(.white)
+                                //.font(.footnote)
+                        }
+                    VStack {
+                        Text("Home")
+                            .foregroundColor(.black)
+                        Text("Address info")
+                            .foregroundColor(.gray)
+                            .font(.footnote)
+                        
+                    }
+                }
+            
+            }
+          
+            Button {
+                // Shows the place you looked up last
+            } label: {
+                HStack{
+                    Circle()
+                        .foregroundColor(.black)
+                        .frame(width:30, height:30)
+                        .overlay{
+                            Image(systemName: "arrow.turn.up.right")
+                                .foregroundColor(.white)
+                        
+                        }
+                    Text("Hepatica florist")
+                        .foregroundColor(.black)
+                    
+                    }
+            }
+
+        }
     }
 }
 

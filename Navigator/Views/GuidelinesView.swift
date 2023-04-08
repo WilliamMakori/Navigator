@@ -9,7 +9,18 @@ import SwiftUI
 
 struct GuidelinesView: View {
     var body: some View {
-        Text("Guidelines and three buttons underneath")
+        VStack {
+            Text("My Guide")
+                .foregroundColor(.gray)
+                .font(.footnote)
+            .bold()
+        }
+        Button {
+            // Opens pop up guide view and gives user the option to add a new Guide
+        } label: {
+            Text("New Guide")
+        }
+
     }
 }
 

@@ -8,7 +8,7 @@
 import SwiftUI
 import MapKit
 
-struct Home:View {
+struct Home: View {
     
 
     @State var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 13.086, longitude: 80.27), latitudinalMeters: 10000, longitudinalMeters: 10000)
@@ -17,7 +17,6 @@ struct Home:View {
     var body: some View {
         
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
-            
             Map(coordinateRegion: $region)
                 .ignoresSafeArea(.all,edges: .all)
             
@@ -91,106 +90,226 @@ struct Home:View {
         
     }
     
-    struct BottomSheet: View {
-       
-        @Binding var offset: CGFloat
-        @State var query: String = ""
-        var value : CGFloat
-        var body : some View{
-            NavigationView{
-                VStack {
-                    HStack{
-                        // add the button that represents the users profile
-                    }
-                    
-                    ScrollView(.vertical, showsIndicators: false){
-                        LazyVStack(alignment: .leading, spacing: 15, content: {
-                         // Favourites
-                         // Recents
-                            // My Guides
-                            //Three buttons at the bottom that create different pop up views.
-                            // Four buttons
-                            //Share My Location - impements search feature
-                            
-                            Button("Share my location") {
-                                // The code here should bring out the share pop up menu.
-                                // I think this is built in, shouldn't be too difficult
-                            }
-                           .frame(width: UIScreen.main.bounds.width,height: UIScreen.main.bounds.height*0.04)
-                            .buttonBorderShape(.roundedRectangle)
-                            .buttonStyle(.bordered)
-                            .controlSize(.large)
-                            
-                            // Mark my location
-                            Button("Share my location") {
-                                // The code here should bring out the share pop up menu.
-                                // I think this is built in, shouldn't be too difficult
-                            }
-                           .frame(width: UIScreen.main.bounds.width)
-                            .buttonBorderShape(.roundedRectangle)
-                            .buttonStyle(.bordered)
-                            .controlSize(.large)
-                            .padding(.top)
-                            
-                            // Report an issue
-                            
-                            Button("Share my location"){
-                                // The code here should bring out the share pop up menu.
-                                // I think this is built in, shouldn't be too difficult
-                            }
-                            
-                           .frame(width: UIScreen.main.bounds.width,height: UIScreen.main.bounds.height*0.04)
-                            .buttonBorderShape(.roundedRectangle)
-                            .buttonStyle(.bordered)
-                            .controlSize(.large)
-                            .padding(.top)
-                            
-                            // Terms and conditions
-                            
-                            Button {
-                                // opens link in safari that shows the terms and conditions of the app
-                            } label: {
-                                Text("Terms and conditions >")
-                                    .underline()
-                            }
+    
+    
+    
+    
 
-                        })
-                        .padding()
-                        .padding(.top)
+    
+}
+// Can we store views as classes that take in arguments that initialize their instances?
+
+struct BottomSheet: View {
+   
+    @Binding var offset: CGFloat
+    @State var query: String = ""
+    var heightAndWidthOfCircles: CGFloat = 62
+    var value : CGFloat
+    var body : some View{
+        // How do these containers affect the functionality and positioning of views elements inside them?
+        
+        NavigationView{
+            ScrollView(.vertical, showsIndicators: false){
+                
+                VStack{
+                    ScrollView(.horizontal){
+                        HStack{
+                            Text("   Favorites") // Move this slightly to the left
+                                .bold()
+                                .foregroundColor(.gray)
+                            Spacer()
+                        }
+                        ZStack{
+                            RoundedRectangle(cornerSize: .zero)
+                                .cornerRadius(10)
+                                .foregroundColor(.white)
+                                .shadow(radius: 1)
+                                .frame(width: UIScreen.main.bounds.width*0.95)
+                                
+                            VStack{
+                                // This is the favourites section heading
+                                Spacer()
+                                HStack(spacing: 20){
+                                    VStack{
+                                        Circle()
+                                            .foregroundColor(.blue)
+                                            .frame(width: heightAndWidthOfCircles, height:heightAndWidthOfCircles)
+                                            .overlay {
+                                                
+                                                Image(systemName: "house.fill")
+                                                    .font(.largeTitle)
+                                                    .foregroundColor(.white)
+                                            }
+                                        Text("Home")
+                                        Text("Close by")
+                                            .foregroundColor(.gray)
+                                            .font(.footnote)
+                                    }
+                                    
+                                    VStack{
+                                        Circle()
+                                            .frame(width: heightAndWidthOfCircles, height:heightAndWidthOfCircles)
+                                            .overlay {
+                                                
+                                                Image(systemName:"briefcase.fill")
+                                                    .font(.largeTitle)
+                                                    .foregroundColor(.accentColor)
+                                            }
+                                        Text("Work")
+                                        Text("Add")
+                                            .foregroundColor(.gray)
+                                            .font(.footnote)
+                                    }
+                                    
+                                    VStack{
+                                        Circle()
+                                            .frame(width: heightAndWidthOfCircles, height:heightAndWidthOfCircles)
+                                            .overlay {
+                                                
+                                                Image(systemName:"fork.knife")
+                                                    .font(.largeTitle)
+                                                    .foregroundColor(.white)
+                                            }
+                                            .foregroundColor(.orange)
+                                        Text("Work")
+                                        Text("Dist")
+                                            .foregroundColor(.gray)
+                                            .font(.footnote)
+                                    }
+                                    
+                                    VStack{
+                                        Circle()
+                                            .foregroundColor(.black)
+                                            .frame(width: heightAndWidthOfCircles, height:heightAndWidthOfCircles)
+                                            .overlay {
+                                                
+                                                Image(systemName: "plus")
+                                                    .font(.largeTitle)
+                                                    .foregroundColor(.accentColor)
+                                            }
+                                        Text("Add")
+                                        Text("Close by")
+                                            .font(.footnote)
+                                            .foregroundColor(.gray)
+                                        
+                                    }
+                                }
+                                
+                            }
+                        }
+                    }
+                    ZStack{
+                        
+                        RoundedRectangle(cornerSize: .zero)
+                            .frame(width: UIScreen.main.bounds.width/1.09, height: 50)
+                            .cornerRadius(10)
+                            .foregroundColor(.gray) // Change the shade of gray to a lighter gray and then boom you've got the color
+                 
+                        VStack{
+                            
+                            Text("Share my Location")
+                                .foregroundColor(.white)
+                                .buttonBorderShape(.roundedRectangle)
+                                .buttonStyle(.borderedProminent)
+                                .onTapGesture {
+                                    // Changes the UI to another view.
+                                }
+                            
+                            
+                            
+                        }
+                    }
+                    ZStack{
+                        
+                        RoundedRectangle(cornerSize: .zero)
+                            .frame(width: UIScreen.main.bounds.width/1.09, height: 50)
+                            .cornerRadius(10)
+                            .opacity(10)
+                            .foregroundColor(.gray) // Change the shade of gray to a lighter gray and then boom you've got the color
+                        
+                        VStack{
+                            
+                            Text("Mark My Location")
+                                .foregroundColor(.white)
+                                .buttonBorderShape(.roundedRectangle)
+                                .buttonStyle(.borderedProminent)
+                                .onTapGesture {
+                                    // Changes the UI to another view.
+                                }
+                            
+                            //Text("\(UIScreen.main.bounds.width/1.31)")
+                            
+                        }
+                    }
+                    ZStack{
+                        RoundedRectangle(cornerSize: .zero)
+                            .frame(width: UIScreen.main.bounds.width/1.09, height: 50)
+                            .cornerRadius(10)
+                            .foregroundColor(.gray) // Change the shade of gray to a lighter gray and then boom you've got the color
+                        
+                        
+                        
+                        VStack{
+                            
+                            Text("Report an Issue")
+                                .foregroundColor(.white)
+                                .buttonBorderShape(.roundedRectangle)
+                                .buttonStyle(.borderedProminent)
+                            
+                                .onTapGesture {
+                                    // Changes the UI to another view.
+                                }
+                            
+                            //Text("\(UIScreen.main.bounds.width/1.31)")
+                            
+                        }
+                        
+                    }
+                    HStack{
+                        
+                        Text("     Terms & Conditions>")
+                            .font(.footnote)
+                            .foregroundColor(.gray)
+                            .onTapGesture {
+                                // This should send me to the terms and conditions link
+                                
+                            }
+                        Spacer();Spacer();Spacer();Spacer();Spacer()
+                        Spacer()
+                        Spacer()
+                        Spacer()
+                        
                     }
                     
                 }
+                
+            
+                
             }
             .searchable(text: $query){
                 // We can use a preview
             }
             
-//            .background(BlurView(style: .systemMaterial))
-            .cornerRadius(15)
+            //            .background(BlurView(style: .systemMaterial))
+            
             .onChange(of: query) { newValue in
                 // observeablObject.searchResults = observeableObject.searchResults.filter ({ location in
                 // if location.house_number.contains(query)
-                // This will be shown to 
-//            })
+                // This will be shown to
+                //            })
+                
                 
                 
             }
-        }
+        }.cornerRadius(15)
+            
+        
+        
     }
-    
-    
-    
+}
+struct BottomSheetView_Previews: PreviewProvider {
+    static var previews: some View {
+        Home()
+    }
+}
 
-    struct BottomSheetView_Previews: PreviewProvider {
-        static var previews: some View {
-            Home()
-        }
-    }
-}
-struct BottomSheetMenu: View{
-    var body: some View{
-        Text("All the views in the menu below")
-        Text("recents")
-        Text("")
-    }
-}

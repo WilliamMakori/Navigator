@@ -6,78 +6,51 @@
 //
 
 import SwiftUI
-
+class CircleDimensions{
+    var width: CGFloat
+    var height: CGFloat
+    init(number: CGFloat){
+        width = number
+        height = number
+    }
+    
+}
 struct RecentsView: View {
-   
+    var dimensions: CircleDimensions = CircleDimensions(number: 60)
     var body: some View {
-        List{
-            Button {
-                // Navigates to a location, direct this to another view.
-            } label: {
-                HStack{
-                    Circle()
-                        .foregroundColor(.red)
-                        .frame(width:30, height:30)
-                        .overlay{
-                            Image(systemName: "mappin")
-                                .foregroundColor(.white)
-                                //.font(.footnote)
-                        }
-                    VStack{
-                        Text("Dropped pin")
-                        
-                            .foregroundColor(.black)
-                        // Print the address associated with where the pin is below it, font - footnote, color is gray
-                        Text("Address info")
-                            .foregroundColor(.gray)
-                            .font(.footnote)
-                    }
-                    
-                }
-            }
-
-            Button{
-                
-            }label:{
-                HStack{
-                    Circle()
-                        .foregroundColor(.red)
-                        .frame(width:30, height:30)
-                        .overlay{
-                            Image(systemName: "mappin")
-                                .foregroundColor(.white)
-                                //.font(.footnote)
-                        }
-                    VStack {
-                        Text("Home")
-                            .foregroundColor(.black)
-                        Text("Address info")
-                            .foregroundColor(.gray)
-                            .font(.footnote)
-                        
-                    }
-                }
+        NavigationView{
+            // Do you have to embed a list in a navigationView?
             
-            }
-          
-            Button {
-                // Shows the place you looked up last
-            } label: {
+            List{
                 HStack{
                     Circle()
-                        .foregroundColor(.black)
-                        .frame(width:30, height:30)
+                        .frame(width: dimensions.width, height: dimensions.width)
+                        .foregroundColor(.red)
                         .overlay{
-                            Image(systemName: "arrow.turn.up.right")
+                            Image(systemName: "mappin")
                                 .foregroundColor(.white)
-                        
                         }
-                    Text("Hepatica florist")
-                        .foregroundColor(.black)
-                    
-                    }
-            }
-
+                }
+                HStack{
+                    Circle()
+                        .frame(width: dimensions.width, height: dimensions.width)
+                        .foregroundColor(.red)
+                        .overlay{
+                            Image(systemName: "mappin")
+                                .foregroundColor(.white)
+                                .font(.largeTitle)
+                        }
+                }
+                HStack{
+                    Circle()
+                        .frame(width: dimensions.width, height: dimensions.width)
+                        .overlay{
+                            Image(systemName: "arrow.left")
+                                .foregroundColor(.white)
+                                .font(.largeTitle)
+                        }
+                }
+            }.navigationTitle("Recents")
         }
     }
 }

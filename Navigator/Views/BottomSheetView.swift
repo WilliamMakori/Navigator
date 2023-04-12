@@ -31,10 +31,6 @@ struct Home: View {
                             
                             DragGesture().onChanged({ (value) in
                             withAnimation{
-                                // Checking the direction of the scroll
-                                // scrolling upwards....
-                                // using startLocation bcz translation will change when we drag up and down....
-                                // Something i missed up here
                                 if value.startLocation.y > reader.frame(in: .global).minX{
                                     if value.translation.height < 0 && offset > (-reader.frame(in: .global).height + 150){
                                         offset = value.translation.height
@@ -52,7 +48,6 @@ struct Home: View {
                             
                         }).onEnded({ (value) in
                             // Keyboard has to disappear after clicking out.
-                            
                             withAnimation {
                                 // Checking and pulling the screen ...
                                 if value.startLocation.y > reader.frame(in: .global).midX{
@@ -103,101 +98,27 @@ struct BottomSheet: View {
    
     @Binding var offset: CGFloat
     @State var query: String = ""
-    var heightAndWidthOfCircles: CGFloat = 62
+    var heightAndWidthOfCircles: CGFloat = 70
     var value : CGFloat
     var body : some View{
         // How do these containers affect the functionality and positioning of views elements inside them?
         
         NavigationView{
+            
             ScrollView(.vertical, showsIndicators: false){
                 
                 VStack{
-                    ScrollView(.horizontal){
-                        HStack{
-                            Text("   Favorites") // Move this slightly to the left
-                                .bold()
-                                .foregroundColor(.gray)
-                            Spacer()
-                        }
-                        ZStack{
-                            RoundedRectangle(cornerSize: .zero)
-                                .cornerRadius(10)
-                                .foregroundColor(.white)
-                                .shadow(radius: 1)
-                                .frame(width: UIScreen.main.bounds.width*0.95)
-                                
-                            VStack{
-                                // This is the favourites section heading
-                                Spacer()
-                                HStack(spacing: 20){
-                                    VStack{
-                                        Circle()
-                                            .foregroundColor(.blue)
-                                            .frame(width: heightAndWidthOfCircles, height:heightAndWidthOfCircles)
-                                            .overlay {
-                                                
-                                                Image(systemName: "house.fill")
-                                                    .font(.largeTitle)
-                                                    .foregroundColor(.white)
-                                            }
-                                        Text("Home")
-                                        Text("Close by")
-                                            .foregroundColor(.gray)
-                                            .font(.footnote)
-                                    }
-                                    
-                                    VStack{
-                                        Circle()
-                                            .frame(width: heightAndWidthOfCircles, height:heightAndWidthOfCircles)
-                                            .overlay {
-                                                
-                                                Image(systemName:"briefcase.fill")
-                                                    .font(.largeTitle)
-                                                    .foregroundColor(.accentColor)
-                                            }
-                                        Text("Work")
-                                        Text("Add")
-                                            .foregroundColor(.gray)
-                                            .font(.footnote)
-                                    }
-                                    
-                                    VStack{
-                                        Circle()
-                                            .frame(width: heightAndWidthOfCircles, height:heightAndWidthOfCircles)
-                                            .overlay {
-                                                
-                                                Image(systemName:"fork.knife")
-                                                    .font(.largeTitle)
-                                                    .foregroundColor(.white)
-                                            }
-                                            .foregroundColor(.orange)
-                                        Text("Work")
-                                        Text("Dist")
-                                            .foregroundColor(.gray)
-                                            .font(.footnote)
-                                    }
-                                    
-                                    VStack{
-                                        Circle()
-                                            .foregroundColor(.black)
-                                            .frame(width: heightAndWidthOfCircles, height:heightAndWidthOfCircles)
-                                            .overlay {
-                                                
-                                                Image(systemName: "plus")
-                                                    .font(.largeTitle)
-                                                    .foregroundColor(.accentColor)
-                                            }
-                                        Text("Add")
-                                        Text("Close by")
-                                            .font(.footnote)
-                                            .foregroundColor(.gray)
-                                        
-                                    }
-                                }
-                                
-                            }
-                        }
+                    HStack {
+                        Text("      Favourites")
+                            .foregroundColor(.gray)
+                            .frame(alignment: .trailing)
+                        .bold()
+                        Spacer()
                     }
+                    
+                    Favourites(heightAndWidthOfCircles: 70)
+                    // Why can't I add a list in here? 
+
                     ZStack{
                         
                         RoundedRectangle(cornerSize: .zero)
@@ -286,22 +207,23 @@ struct BottomSheet: View {
             
                 
             }
-            .searchable(text: $query){
-                // We can use a preview
-            }
             
-            //            .background(BlurView(style: .systemMaterial))
+        }
+        .searchable(text: $query){
             
-            .onChange(of: query) { newValue in
-                // observeablObject.searchResults = observeableObject.searchResults.filter ({ location in
-                // if location.house_number.contains(query)
-                // This will be shown to
-                //            })
-                
-                
-                
-            }
-        }.cornerRadius(15)
+        }
+        
+                  
+        
+        .onChange(of: query) { newValue in
+            // observeablObject.searchResults = observeableObject.searchResults.filter ({ location in
+            // if location.house_number.contains(query)
+            // This will be shown to
+            //            })
+     
+        }
+        .cornerRadius(15)
+        
             
         
         
